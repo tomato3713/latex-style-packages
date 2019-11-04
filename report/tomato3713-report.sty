@@ -1,0 +1,96 @@
+\ProvidesPackage{tomato3713-report}[2019/10/21 v0.1]
+\NeedsTeXFormat{pLaTeX2e}
+% 内部のみで使用する命令は，\tomato3713-report@hoge 等の名前とする．
+
+% detect old packages
+\RequirePackage[l2tabu, orthodox]{nag}
+\RequirePackage[all, warning]{onlyamsmath}
+
+%\RequirePackage[a4paper,text={16.5cm,25.2cm},centering]{geometry}
+\RequirePackage[a4paper,centering]{geometry}
+
+% color definitions
+\RequirePackage[dvipsnames, svgnames, x11names, dvipdfmx, table, xcdraw]{xcolor}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+% Fonts
+% Should use otf package
+\RequirePackage[jis2004, uplatex]{otf}
+% set Latin Modern font to European font.
+\RequirePackage{lmodern}
+% set Stix font to formula font.
+\RequirePackage{stix}
+%\RequirePackage{kpfonts}
+% Change font encoding T1 from OT1
+\RequirePackage[T1]{fontenc}
+\def\shatai#1{\makebox[2.25zw][l]{\vphantom{#1}\rotatebox{-48.8}{\scalebox{0.875}[1.143]{\rotatebox{41.2}{\smash{\rlap{#1}}}}}}}
+
+% Math
+\RequirePackage{amsmath}
+\RequirePackage{mathtools}
+\mathtoolsset{showonlyrefs}
+\newcommand{\lnand}[1]{\uparrow{#1}}
+\newcommand{\lnor}[1]{\downarrow{#1}}
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
+
+% References
+\bibliographystyle{junsrt} %参考文献リストを引用された順にソートする (個人的おすすめ)
+\bibliographystyle{jplain} %参考文献リストをsankou.bibに記載した順にソートする
+\RequirePackage{url}
+\RequirePackage[dvipdfmx]{hyperref}
+\hypersetup{
+    colorlinks = false,
+    linkbordercolor = {white},
+}
+\newcommand\figref[1]{図~\ref{fig:#1}}%
+\newcommand\tabref[1]{表~\ref{tab:#1}}
+\newcommand\equref[1]{式~\eqref{eq:#1}}
+\newcommand\coderef[1]{プログラム~(\ref{code:#1})}
+
+% Images
+\RequirePackage[dvipdfmx]{graphicx, color} % or graphics package
+% \fig[width=10cm]{FNAME}{CAPTION}{REFNAME}
+% is show image whose width is 5cm
+\newcommand{\fig}[4][width=5cm]{%
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[#1]{#2}
+        \caption{#3}\label{fig:#4}
+    \end{figure}%
+    }
+
+% Code
+\RequirePackage{listings, jlisting} % for source codes
+% programming documents macros for listings {{{
+\lstset{%
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true, frame=tRBl, classoffset=1,
+    numbers=left, stepnumber=1, numberstyle=\tiny, tabsize=2
+    }
+
+% TODO: Edit optimize to markdown
+\lstdefinelanguage{Markdown}{
+    morekeywords={b, ble, blt, bne,
+        ldr, str,
+        r0, r1, r2, r3, r4, r5, r6, r7, rr8, r9, r10, r11, r12,
+        sp  },
+    sensitive=false, % keywords are not case-sensitive
+    morestring=[b] % defines that strings are enclosed in double quotes
+} %
+% \code{LANG}{FNAME}{CAPTION}{LABEL}
+% \begin{lstlisting}[caption=CAPTION, label=LABEL, LANGUAGE=LANG]
+%    CODE
+% \end{lstlisting}
+\newcommand{\code}[4]{%
+    \lstinputlisting[language=#1, caption=#3, label=code:#4]{#2}
+    }
+
