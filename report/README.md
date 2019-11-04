@@ -18,6 +18,7 @@
 
 ```shell
 cp tomato3713-report.sty /usr/local/texlive/texmf-local/tex/latex/local/
+mktexlsr
 ```
 
 ## License
